@@ -1,23 +1,23 @@
-package com.simpleyi.springbootmall.model;
-
+package com.simpleyi.springbootmall.dto;
 
 import com.simpleyi.springbootmall.constant.ProductCategory;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
-
 @Data
-public class Product {
-
-    private Integer productId;
+public class ProductRequest {
+    @NotNull
     private String productName;
+    @NotNull
     private ProductCategory category;
+    @NotNull
     private String imageUrl;
+    @NotNull
     private Integer price;
+    @NotNull
     private Integer stock;
-    private String description;
-    private Date createdDate;
-    private Date lastModiciedDate;
 
+    private String description;
 
 }

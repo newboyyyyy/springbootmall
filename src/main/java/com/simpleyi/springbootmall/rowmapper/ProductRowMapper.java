@@ -13,14 +13,8 @@ public class ProductRowMapper implements RowMapper<Product> {
 
         Product product = new Product();
         product.setProductId(resultSet.getInt("product_id"));
-        product.setProdcutName(resultSet.getString("product_name"));
-
-        //enum設定
-//        String categoryStr= resultSet.getString("category");
-//        ProductCategory category = ProductCategory.valueOf(categoryStr);
-//        product.setCategory(category);
-
-        //enum設定
+        product.setProductName(resultSet.getString("product_name"));
+        //enum
         product.setCategory(ProductCategory.valueOf(resultSet.getString("category")));
 
         product.setImageUrl(resultSet.getString("image_url"));
