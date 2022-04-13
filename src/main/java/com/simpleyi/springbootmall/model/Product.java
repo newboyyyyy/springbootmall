@@ -1,5 +1,6 @@
 package com.simpleyi.springbootmall.model;
 
+import com.simpleyi.springbootmall.constant.ProductCategory;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +10,7 @@ public class Product {
 
     private Integer productId;
     private String prodcutName;
-    private String category;
+    private ProductCategory category;
     private String imageUrl;
     private Integer price;
     private Integer stock;
