@@ -2,6 +2,7 @@ package com.simpleyi.springbootmall.controller;
 
 
 import com.simpleyi.springbootmall.constant.ProductCategory;
+import com.simpleyi.springbootmall.dto.ProductQueryParams;
 import com.simpleyi.springbootmall.dto.ProductRequest;
 import com.simpleyi.springbootmall.model.Product;
 import com.simpleyi.springbootmall.service.ProductService;
@@ -25,7 +26,11 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search
     ){
-        List<Product> productList = productService.getProducts(category,search);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
+        List<Product> productList = productService.getProducts(productQueryParams);
 
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }

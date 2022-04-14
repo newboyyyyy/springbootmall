@@ -2,6 +2,7 @@ package com.simpleyi.springbootmall.dao.impl;
 
 import com.simpleyi.springbootmall.constant.ProductCategory;
 import com.simpleyi.springbootmall.dao.ProductDao;
+import com.simpleyi.springbootmall.dto.ProductQueryParams;
 import com.simpleyi.springbootmall.dto.ProductRequest;
 import com.simpleyi.springbootmall.model.Product;
 import com.simpleyi.springbootmall.rowmapper.ProductRowMapper;
@@ -24,7 +25,7 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public List<Product> getProducts(ProductCategory category , String search) {
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
         String sql = "SELECT product_id,product_name,category,image_url,price," +
                 "stock,description,created_date,last_modified_date " +
                 "FROM product WHERE 1=1";
@@ -32,15 +33,15 @@ public class ProductDaoImpl implements ProductDao {
         Map<String , Object> map = new HashMap<>();
 
         //參數查詢
-        if(category != null){
+        if(productQueryParams.getCategory() != null){
             sql = sql + " AND category = :category";
-            map.put("category",category.name());
+            map.put("category",productQueryParams.getCategory().name());
         }
 
         //模糊查詢
-        if(search != null) {
+        if(productQueryParams.getSearch() != null) {
             sql = sql + " AND product_name LIKE :search";
-            map.put("search","%" + search +"%");
+            map.put("search","%" + productQueryParams.getSearch() +"%");
         }
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
