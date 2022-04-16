@@ -1,6 +1,5 @@
 package com.simpleyi.springbootmall.dao.impl;
 
-import com.simpleyi.springbootmall.constant.ProductCategory;
 import com.simpleyi.springbootmall.dao.ProductDao;
 import com.simpleyi.springbootmall.dto.ProductQueryParams;
 import com.simpleyi.springbootmall.dto.ProductRequest;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -43,6 +41,16 @@ public class ProductDaoImpl implements ProductDao {
             sql = sql + " AND product_name LIKE :search";
             map.put("search","%" + productQueryParams.getSearch() +"%");
         }
+
+        //排序
+        sql = sql + " ORDER BY " + productQueryParams.getOrderBy()+" " + productQueryParams.getSort();
+
+
+        //分頁
+        sql = sql + " LIMIT :limit OFFSET :offset ";
+        map.put("limit" , productQueryParams.getLimit());
+        map.put("offset" , productQueryParams.getOffset());
+
 
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
         return productList;
